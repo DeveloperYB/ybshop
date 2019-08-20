@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/DeveloperYB/ybshop/issues"
   },
-  "homepage": "https://github.com/DeveloperYB/ybshop#readme"
+  "homepage": "https://github.com/DeveloperYB/ybshop#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
