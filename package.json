@@ -4,7 +4,7 @@
   "description": "learning node js",
   "main": "index.js",
   "scripts": {
-    "start": "npx nodemon app.js"
+    "start": "npx nodemon -e js,html app.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,12 @@
   },
   "homepage": "https://github.com/DeveloperYB/ybshop#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "moment": "^2.24.0",
+    "morgan": "^1.9.1",
+    "mysql2": "^1.6.5",
+    "nunjucks": "^3.2.0",
+    "sequelize": "^4.42.0"
   }
 }
