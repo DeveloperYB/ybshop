@@ -4,13 +4,18 @@
 {% block content -%}
   <table class="table table-bordered table-hover">
     <tr>
+      <th>상품번호</th>
       <th>제목</th>
       <th>상품설명</th>
       <th>작성일</th>
+      <th>수정일</th>
       <th>삭제</th>
     </tr>
     {% for product in products %}
     <tr>
+      <td>
+        {{ product.id }}
+      </td>
       <td>
         <a href="/admin/products/detail/{{ product.id }}">{{ product.name }}</a>
       </td>
@@ -21,7 +26,16 @@
         {{ product.dateFormat( product.createdAt ) }}
       </td>
       <td>
-        <a href="#" class="btn btn-danger">삭제</a>
+        {{ product.dateFormat( product.updatedAt ) }}
+      </td>
+      <td>
+        <a
+          href="/admin/products/delete/{{ product.id }}"
+          class="btn btn-danger"
+          onclick="return confirm('삭제하시겠습니까?')"
+        >
+          삭제
+        </a>
       </td>
     </tr>
     {% endfor %}
