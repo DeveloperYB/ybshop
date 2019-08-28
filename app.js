@@ -10,7 +10,7 @@ const db = require('./models');
 db.sequelize.authenticate()
 .then(() => {
   console.log('Connection has been established successfully.');
-  // return db.sequelize.sync(); // 추후 주석
+  // return db.sequelize.sync();
 })
 .then(() => {
   console.log('DB Sync complete.');
