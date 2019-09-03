@@ -1,7 +1,7 @@
-var Sequelize = require('sequelize');
-var path = require('path');
-var fs = require('fs');
-var dotenv = require('dotenv');
+const Sequelize = require('sequelize');
+const path = require('path');
+const fs = require('fs');
+const dotenv = require('dotenv');
 
 dotenv.config(); //LOAD CONFIG
 
@@ -18,7 +18,7 @@ process.env.DB_USER, process.env.DB_PASSWORD,{
   }
 });
 
-let db = [];
+const db = [];
 
 fs.readdirSync(__dirname)
   .filter(file => {

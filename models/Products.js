@@ -2,7 +2,7 @@ const moment = require('moment');
 const numeral = require('numeral');
 
 module.exports = (sequelize, DataTypes) => {
-  var Products = sequelize.define('Products',
+  const Products = sequelize.define('Products',
     {
       id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
       name: { type: DataTypes.STRING },
