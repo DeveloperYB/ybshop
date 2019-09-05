@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const models = require('../models');
+const loginRequired = require('../helpers/loginRequired');
+const paginate = require('express-paginate');
 
 // csrf 셋팅
 const csrf = require('csurf');
@@ -27,30 +29,55 @@ router.get('/', (req, res) => {
   res.send('admin url 입니당');
 });
 
-router.get('/products', async (req, res) => {
-  const products = await models.Products.findAll({
-    order: [
-      ['updatedAt', 'DESC'],
-    ],
-  });
-  res.render( 'admin/products.html' ,{ products });
+router.get('/products', paginate.middleware(5, 50), async (req, res) => {
+  try {
+    const [products, totalCount] = await Promise.all([
+      models.Products.findAll({
+        include: [
+          {
+            model: models.User,
+            as: 'Owner',
+            attributes: ['username', 'displayname'],
+          },
+        ],
+        limit: req.query.limit,
+        offset: req.offset,
+        order: [
+          ['updatedAt', 'DESC'],
+        ],
+      }),
+      models.Products.count(),
+    ]);
+
+    const pageCount = Math.ceil( totalCount / req.query.limit );
+    const pages = paginate.getArrayPages(req)( 5 , pageCount, req.query.page);
+
+    res.render( 'admin/products.html' , { products , pages , pageCount });
+  } catch (e) {
+    console.log(e);
+  }
 });
 
-router.get('/products/write', csrfProtection, (req, res) => {
+router.get('/products/write', loginRequired, csrfProtection, (req, res) => {
   res.render('admin/form.html', { csrfToken: req.csrfToken() });
 });
 
-router.post('/products/write', upload.single('thumbnail'), csrfProtection, async (req,res) => {
+router.post('/products/write', loginRequired, upload.single('thumbnail'), csrfProtection, async (req,res) => {
   try {
     req.body.thumbnail = (req.file) ? req.file.filename : '';
-    await models.Products.create(req.body);
+    // await models.Products.create(req.body);
+
+    // 유저를 가져온다음에 저장
+    const user = await models.User.findByPk(req.user.id);
+    await user.createProduct(req.body);
+
     res.redirect('/admin/products');
   } catch (e){
     console.log(e);
   }
 });
 
-router.get('/products/edit/:id', csrfProtection, async (req, res) => {
+router.get('/products/edit/:id', loginRequired, csrfProtection, async (req, res) => {
   try {
     const product = await models.Products.findByPk(req.params.id);
     res.render( 'admin/form.html' ,{ product, csrfToken: req.csrfToken() });
@@ -59,7 +86,7 @@ router.get('/products/edit/:id', csrfProtection, async (req, res) => {
   }
 });
 
-router.post('/products/edit/:id', upload.single('thumbnail'), async (req, res) => {
+router.post('/products/edit/:id', loginRequired, upload.single('thumbnail'), async (req, res) => {
   try {
     // 이전에 저장되어있는 파일명을 받아오기 위함
     const product = await models.Products.findByPk(req.params.id);
@@ -83,7 +110,7 @@ router.post('/products/edit/:id', upload.single('thumbnail'), async (req, res) =
   }
 });
 
-router.get('/products/delete/:id', async (req, res) => {
+router.get('/products/delete/:id', loginRequired, async (req, res) => {
   await models.Products.destroy({
     where: {
       id: req.params.id,

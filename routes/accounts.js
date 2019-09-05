@@ -12,10 +12,8 @@ passport.serializeUser(  (user, done) => {
 });
 
 passport.deserializeUser(  (user, done) => {
-  const result = user;
-  result.password = "";
   console.log('deserializeUser');
-  done(null, result);
+  done(null, user);
 });
 
 passport.use(
@@ -41,7 +39,7 @@ passport.use(
         username,
         password : passwordHash(password),
       },
-      // attributes: { exclude: ['password'] }
+      attributes: { exclude: ['password'] }
     });
     // 유저에서 조회되지 않을시
     if(!user){
@@ -100,7 +98,7 @@ router.post('/login',
     res.send(
       `<script>
         alert("로그인 성공");
-        location.href="/accounts/success";
+        location.href="/";
       </script>`
     );
   }

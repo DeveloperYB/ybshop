@@ -10,11 +10,12 @@ const dotenv = require('dotenv');
 dotenv.config(); // LOAD CONFIG
 
 passport.serializeUser( (user, done) => {
-    done(null, user);
+  done(null, user);
 });
 
 passport.deserializeUser( (user, done) => {
-    done(null, user);
+  console.log(user);
+  done(null, user);
 });
 
 passport.use(new FacebookStrategy({
@@ -34,37 +35,37 @@ passport.use(new FacebookStrategy({
         //console.log(profile._raw);
         //console.log(profile._json);
 
-        // try{
-        //     const username =`fb_${profile.id}`;
+        try{
+          const username =`fb_${profile.id}`;
 
-        //     // 존재하는지 체크
-        //     const exist = await models.User.count({
-        //         where : {
-        //             // 아이디로 조회를 해봅니다.
-        //             username
-        //         }
-        //     });
+          // 존재하는지 체크
+          const exist = await models.User.count({
+            where : {
+              // 아이디로 조회를 해봅니다.
+              username
+            }
+          });
 
-        //     if(!exist){
-        //         // 존재하면 바로 세션에 등록
-        //         user = await models.User.create({
-        //             username ,
-        //             displayname : profile.displayName ,
-        //             password : "facebook"
-        //         });
-        //     }else{
-        //         user = await models.User.findOne({
-        //             where : {
-        //                 username
-        //             }
-        //         });
-        //     }
+          if(!exist){
+            // 존재하면 바로 세션에 등록
+            user = await models.User.create({
+              username ,
+              displayname : profile.displayName ,
+              password : "facebook"
+            });
+          }else{
+            user = await models.User.findOne({
+              where : {
+                username
+              }
+            });
+          }
 
-        //     return done(null, user );
+          return done(null, user);
 
-        // }catch(e){
-        //     console.log(e);
-        // }
+        }catch(e){
+          console.log(e);
+        }
 
     }
 ));
@@ -75,16 +76,16 @@ router.get('/facebook', passport.authenticate('facebook', { scope: 'email'}) );
 
 //인증후 페이스북에서 이 주소로 리턴해줌. 상단에 적은 callbackURL과 일치
 router.get('/facebook/callback',
-    passport.authenticate('facebook',
-        {
-            successRedirect: '/auth/facebook/success',
-            failureRedirect: '/auth/facebook/fail'
-        }
-    )
+  passport.authenticate('facebook',
+    {
+      successRedirect: '/',
+      failureRedirect: '/auth/facebook/fail'
+    }
+  )
 );
 
 //로그인 성공시 이동할 주소
-router.get('/facebook/success', (req,res) => {
+router.get('/', (req,res) => {
     res.send(req.user);
 });
 

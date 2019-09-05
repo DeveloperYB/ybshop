@@ -32,6 +32,8 @@ const admin = require('./routes/admin');
 const contacts = require('./routes/contacts');
 const accounts = require('./routes/accounts');
 const auth = require('./routes/auth');
+const home = require('./routes/home');
+const chat = require('./routes/chat');
 
 const app = express();
 const port = 5000;
@@ -67,17 +69,26 @@ app.use(passport.session());
 //플래시 메시지 관련
 app.use(flash());
 
-app.get('/', (req, res) => {
-  res.send('first app !!');
-  // nunjucks.renderString('Hello ');
+//로그인 정보 뷰에서만 변수로 셋팅, 전체 미들웨어는 router위에 두어야 에러가 안난다
+app.use(function(req, res, next) {
+  app.locals.isLogin = req.isAuthenticated();
+  //app.locals.urlparameter = req.url; //현재 url 정보를 보내고 싶으면 이와같이 셋팅
+  //app.locals.userData = req.user; //사용 정보를 보내고 싶으면 이와같이 셋팅
+  next();
 });
 
+app.use('/', home);
 app.use('/admin', admin);
 app.use('/contacts', contacts);
 app.use('/accounts', accounts);
 app.use('/auth', auth);
+app.use('/chat', chat);
 
 
-app.listen(port, () => {
+const server = app.listen( port, function(){
   console.log('Express listening on port', port);
 });
+
+const listen = require('socket.io');
+const io = listen(server);
+require('./helpers/socketConnection')(io);

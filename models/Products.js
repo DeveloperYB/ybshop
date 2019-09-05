@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE'
       },
     );
+    Products.belongsTo(models.User, { as :'Owner',  foreignKey: 'user_id', targetKey: 'id'} );
   };
 
   Products.prototype.dateFormat = (date) => moment(date).format('YYYY-MM-DD h:mm:ss A');
