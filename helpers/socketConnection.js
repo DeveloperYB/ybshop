@@ -11,6 +11,7 @@ module.exports =  (io) => {
     if(!userList.includes(user.displayname)){
       userList.push(user.displayname);
     }
+    io.emit('server message', { message : `${user.displayname}님이 입장하셨습니다.` , displayname : '알림' });
     io.emit('join', userList);
 
     //사용자 명과 메시지를 같이 반환한다.
@@ -20,6 +21,7 @@ module.exports =  (io) => {
 
     socket.on('disconnect', () => {
       userList.removeByValue(user.displayname);
+      io.emit('server message', { message : `${user.displayname}님이 퇴장하셨습니다.` , displayname : '알림' });
       io.emit('leave', userList);
     });
   });

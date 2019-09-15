@@ -160,4 +160,8 @@ router.get('/products/delete/:product_id/:memo_id', async(req, res) => {
   }
 });
 
+router.post('/products/ajax_summernote', loginRequired, upload.single('thumbnail'), (req,res) => {
+  res.send( '/uploads/' + req.file.filename);
+});
+
 module.exports = router;
