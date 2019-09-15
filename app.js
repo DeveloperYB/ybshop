@@ -51,16 +51,21 @@ app.use(cookieParser());
 
 // 업로드 path 추가
 app.use('/uploads', express.static('uploads'));
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 //session 관련 셋팅
-app.use(session({
+const sessionMiddleWare = session({
   secret: 'fastcampus',
   resave: false,
   saveUninitialized: true,
   cookie: {
     maxAge: 2000 * 60 * 60 //지속시간 2시간
-  }
-}));
+  },
+  store: new SequelizeStore({
+    db: db.sequelize
+  }),
+});
+app.use(sessionMiddleWare);
 
 //passport 적용
 app.use(passport.initialize());
@@ -91,4 +96,10 @@ const server = app.listen( port, function(){
 
 const listen = require('socket.io');
 const io = listen(server);
+
+//socket io passport 접근하기 위한 미들웨어 적용
+io.use((socket, next) => {
+  sessionMiddleWare(socket.request, socket.request.res, next);
+});
+
 require('./helpers/socketConnection')(io);
