@@ -4,7 +4,7 @@
   "description": "learning node js",
   "main": "index.js",
   "scripts": {
-    "start": "npx nodemon -e js,html app.js"
+    "start": "npx nodemon -e js,html server.js"
   },
   "repository": {
     "type": "git",

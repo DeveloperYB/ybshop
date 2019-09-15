@@ -14,92 +14,95 @@ const session = require('express-session');
 // db 관련
 const db = require('./models');
 
-// DB authentication
-db.sequelize.authenticate()
-.then(() => {
-  console.log('Connection has been established successfully.');
-  // return db.sequelize.sync();
-  // return db.sequelize.drop();
-})
-.then(() => {
-  console.log('DB Sync complete.');
-})
-.catch(err => {
-  console.error('Unable to connect to the database:', err);
-});
+class App {
+  constructor () {
+    this.app = express();
+    // db 접속
+    this.dbConnection();
+    // 뷰엔진 셋팅
+    this.setViewEngine();
+    // 세션 셋팅
+    this.setSession();
+    // 미들웨어 셋팅
+    this.setMiddleWare();
+    // 정적 디렉토리 추가
+    this.setStatic();
+    // 로컬 변수
+    this.setLocals();
+    // 라우팅
+    this.getRouting();
+  }
 
-const admin = require('./routes/admin');
-const contacts = require('./routes/contacts');
-const accounts = require('./routes/accounts');
-const auth = require('./routes/auth');
-const home = require('./routes/home');
-const chat = require('./routes/chat');
+  dbConnection(){
+    // DB authentication
+    db.sequelize.authenticate()
+    .then(() => {
+      console.log('Connection has been established successfully.');
+      // return db.sequelize.sync();
+      // return db.sequelize.drop();
+    })
+    .then(() => {
+      console.log('DB Sync complete.');
+      // 더미 데이터가 필요하면 아래 설정
+      // require('./config/insertDummyData')();
+    })
+    .catch(err => {
+      console.error('Unable to connect to the database:', err);
+    });
+  }
 
-const app = express();
-const port = 5000;
+  setMiddleWare (){
+    this.app.use(logger('dev'));
+    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.urlencoded({ extended: false }));
+    this.app.use(cookieParser());
 
-nunjucks.configure('template', {
-  autoescape: true,
-  express: app,
-});
+    //passport 적용
+    this.app.use(passport.initialize());
+    this.app.use(passport.session());
 
-// 미들웨어 셋팅
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+    //플래시 메시지 관련
+    this.app.use(flash());
+  }
 
-// 업로드 path 추가
-app.use('/uploads', express.static('uploads'));
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
+  setViewEngine (){
+    nunjucks.configure('template', {
+      autoescape: true,
+      express: this.app
+    });
+  }
 
-//session 관련 셋팅
-const sessionMiddleWare = session({
-  secret: 'fastcampus',
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    maxAge: 2000 * 60 * 60 //지속시간 2시간
-  },
-  store: new SequelizeStore({
-    db: db.sequelize
-  }),
-});
-app.use(sessionMiddleWare);
+  setSession (){
+    const SequelizeStore = require('connect-session-sequelize')(session.Store);
+    this.app.sessionMiddleWare = session({
+      secret: 'fastcampus',
+      resave: false,
+      saveUninitialized: true,
+      cookie: {
+        maxAge: 2000 * 60 * 60, //지속시간 2시간
+      },
+      store: new SequelizeStore({
+        db: db.sequelize,
+      }),
+    });
+    this.app.use(this.app.sessionMiddleWare);
+  }
 
-//passport 적용
-app.use(passport.initialize());
-app.use(passport.session());
+  setStatic (){
+    this.app.use('/uploads', express.static('uploads'));
+  }
 
-//플래시 메시지 관련
-app.use(flash());
+  setLocals(){
+    this.app.use( (req, _, next) => {
+      this.app.locals.isLogin = req.isAuthenticated();
+      this.app.locals.req_path = req.path;
+      next();
+    });
+  }
 
-//로그인 정보 뷰에서만 변수로 셋팅, 전체 미들웨어는 router위에 두어야 에러가 안난다
-app.use(function(req, res, next) {
-  app.locals.isLogin = req.isAuthenticated();
-  //app.locals.urlparameter = req.url; //현재 url 정보를 보내고 싶으면 이와같이 셋팅
-  //app.locals.userData = req.user; //사용 정보를 보내고 싶으면 이와같이 셋팅
-  next();
-});
+  getRouting (){
+    this.app.use(require('./controllers'));
+  }
+}
 
-app.use('/', home);
-app.use('/admin', admin);
-app.use('/contacts', contacts);
-app.use('/accounts', accounts);
-app.use('/auth', auth);
-app.use('/chat', chat);
-
-
-const server = app.listen( port, function(){
-  console.log('Express listening on port', port);
-});
-
-const listen = require('socket.io');
-const io = listen(server);
-
-//socket io passport 접근하기 위한 미들웨어 적용
-io.use((socket, next) => {
-  sessionMiddleWare(socket.request, socket.request.res, next);
-});
-
-require('./helpers/socketConnection')(io);
+module.exports = new App().app;
