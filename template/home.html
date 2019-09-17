@@ -6,8 +6,9 @@
     <div class="container" id="masonry_container">
         {% for product in products %}
         <div class="masonry-grid">
+          <a class="product-link-wrap" href="/products/{{ product.id }}">
             {% if product.thumbnail %}
-                <img src="/uploads/{{ product.thumbnail }}">
+              <img src="/uploads/{{ product.thumbnail }}">
             {% endif %}
             <p>
                 {{ product.name }}<br />
@@ -15,12 +16,23 @@
                     {{ product.dateFormat( product.createdAt ) }}
                 )
             </p>
+          </a>
         </div>
         {% endfor %}
     </div>
 
 <style type="text/css">
 .masonry-grid img { max-width: 260px; }
+.product-link-wrap {
+  display: block;
+}
+.product-link-wrap:hover {
+  text-decoration: none;
+}
+.product-link-wrap p {
+  color: #000;
+  text-decoration: none;
+}
 </style>
 <script type="text/javascript">
     var $masonry_container = $('#masonry_container');

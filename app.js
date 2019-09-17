@@ -90,10 +90,11 @@ class App {
 
   setStatic (){
     this.app.use('/uploads', express.static('uploads'));
+    this.app.use('/static', express.static('static'));
   }
 
   setLocals(){
-    this.app.use( (req, _, next) => {
+    this.app.use((req, _, next) => {
       this.app.locals.isLogin = req.isAuthenticated();
       this.app.locals.req_path = req.path;
       next();

@@ -34,11 +34,16 @@ exports.get_login = (req, res) => {
   res.render('accounts/login.html', { flashMessage : req.flash().error });
 };
 
-exports.post_login = (_, res) => {
+exports.post_login = (req, res) => {
   res.send(
     `<script>
       alert("로그인 성공");
       location.href="/";
     </script>`
   );
+};
+
+exports.get_logout = (req, res) => {
+  req.logout();
+  res.redirect('/accounts/login');
 };
