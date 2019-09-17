@@ -15,7 +15,8 @@ process.env.DB_USER, process.env.DB_PASSWORD,{
     max: 5,
     min: 0,
     idle: 10000
-  }
+  },
+  loggin: false, // 셀렉트 로깅 콘솔
 });
 
 const db = [];

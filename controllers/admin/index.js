@@ -10,7 +10,7 @@ const upload = require('../../middleware/multer');
 
 router.get('/products', paginate.middleware(3, 50), ctrl.get_products);
 
-router.get('/products/write', csrfProtection, ctrl.get_write);
+router.get('/products/write', loginRequired, csrfProtection, ctrl.get_write);
 router.post('/products/write', loginRequired, upload.single('thumbnail'), csrfProtection, ctrl.post_write);
 
 router.get('/products/edit/:id', loginRequired, csrfProtection, ctrl.get_edit);
