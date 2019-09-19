@@ -24,6 +24,7 @@ router.post('/products/detail/:id', ctrl.post_detail);
 
 router.post('/products/ajax_summernote', loginRequired, upload.single('thumbnail'), ctrl.post_summernote);
 
-
+router.get('/order', ctrl.get_order );
+router.get('/order/edit/:id', ctrl.get_order_edit );
 
 module.exports = router;
