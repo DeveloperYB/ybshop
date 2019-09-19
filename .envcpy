@@ -11,3 +11,6 @@ NAVER_SECRETCODE = "https://developers.naver.com에서 추출"
 
 SITE_DOMAIN_HTTPS = "httS, 나의 웹사이트 주소를 입력 ex) https://localhost:3001"
 SITE_DOMAIN_HTTP = "http, 나의 웹사이트 주소를 입력 ex) https://localhost:3001"
+
+IAMPORT_API_KEY = "https://admin.iamport.kr/settings에서 추출"
+IAMPORT_SECRET_KEY = "https://admin.iamport.kr/settings에서 추출"

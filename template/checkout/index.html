@@ -83,48 +83,24 @@ $(document).ready(function(){
     IMP.init('imp10421008');
     //아임호트 사이트에서 받아온다( http://www.iamport.kr/ )
     IMP.request_pay({
-        pg : 'inicis',
-        pay_method : 'card',
-        merchant_uid : 'merchant_' + new Date().getTime(),
-        name : '수업:결제테스트',
-        amount : amount ,
-        buyer_email : buyer_email,
-        buyer_name : buyer_name,
-        buyer_tel : buyer_tel,
-        buyer_addr : buyer_addr,
-        buyer_postcode : buyer_postcode,
-        m_redirect_url : 'http://localhost:3000/checkout/complete'
+      amount,
+      buyer_email,
+      buyer_name,
+      buyer_tel,
+      buyer_addr,
+      buyer_postcode,
+      pg: 'inicis',
+      pay_method: 'card',
+      merchant_uid: 'merchant_' + new Date().getTime(),
+      name: '수업:결제테스트',
+      // m_redirect_url: 'https://2faeac02.ngrok.io/checkout/complete'
+      m_redirect_url: 'http://localhost:5000/checkout/complete'
     }, function(rsp){
       if ( rsp.success ) {
-
-        //요청 성공후 ajax POST요청한다.
-        $.ajax({
-          url: '/checkout/complete',
-          type: 'POST',
-          data : {
-            imp_uid : rsp.imp_uid,
-            merchant_uid : rsp.merchant_uid,
-            paid_amount : rsp.paid_amount,
-            apply_num : rsp.apply_num,
-
-            buyer_email : buyer_email,
-            buyer_name : buyer_name,
-            buyer_tel : buyer_tel,
-            buyer_addr : buyer_addr,
-            buyer_postcode : buyer_postcode,
-
-            status : "결재완료",
-          }
-        }).done( function(res){
-          alert("결제가 완료되었습니다.");
-          document.location.href = "/checkout/success";
-        }).fail( function(error){
-          console.log(error);
-        });
-
+        document.location.href = "/checkout/complete?imp_uid=" + rsp.imp_uid;
       } else {
         let msg = '결제에 실패하였습니다.';
-        msg += '에러내용 : ' + rsp.error_msg;
+        msg += '에러내용: ' + rsp.error_msg;
         alert(msg);
       }
     });

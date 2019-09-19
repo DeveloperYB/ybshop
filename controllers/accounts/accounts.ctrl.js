@@ -45,5 +45,9 @@ exports.post_login = (req, res) => {
 
 exports.get_logout = (req, res) => {
   req.logout();
-  res.redirect('/accounts/login');
+  res.send(
+    `<script>
+      location.href="/accounts/login";
+    </script>`
+  );
 };
