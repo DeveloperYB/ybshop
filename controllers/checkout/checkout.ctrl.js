@@ -1,3 +1,5 @@
+const models = require('../../models');
+
 exports.index = (req, res) => {
   const user = req.user;
   let totalAmount = 0; //총결제금액
@@ -13,4 +15,13 @@ exports.index = (req, res) => {
     }
   }
   res.render('checkout/index.html', {cartList, totalAmount});
+};
+
+exports.post_complete = async (req,res) => {
+  await models.Checkout.create(req.body);
+  res.json({message:"success"});
+};
+
+exports.get_success = (req,res) => {
+  res.render('checkout/success.html');
 };
