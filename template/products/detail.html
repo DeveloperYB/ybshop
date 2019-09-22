@@ -3,7 +3,7 @@
 
 {% block content -%}
 <script>
-  const userId = {% if user %}{{ user.id }}{% else %}null{% endif %};
+  const userId = {% if user %}{{ user.id }}{% else %}'nomember'{% endif %};
   const onClickCartButton = () => {
     handleCart({
       productId: "{{ product.id }}",

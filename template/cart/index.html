@@ -3,7 +3,7 @@
 
 {% block content -%}
 <script>
-  const userId = {% if user %}{{ user.id }}{% else %}null{% endif %};
+  const userId = {% if user %}{{ user.id }}{% else %}'nomember'{% endif %};
 </script>
 <h3 className="page-header">장바구니</h3>
 <table class="table table-bordered table-hover">
@@ -55,7 +55,7 @@ $('.deleteCart').click(function(event){
     }
 
     //다시쿠키 설정
-    setCookieHour( "cartList" , JSON.stringify({ ...cartList, [userId]: cartListByUserId }), (10 * 365 * 24) );
+    setCookieHour( 'cartList' , JSON.stringify({ ...cartList, [userId]: cartListByUserId }), (10 * 365 * 24) );
 
     //완료후 다시 cart 페이지로 이동
     document.location.href = "/cart";

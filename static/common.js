@@ -23,7 +23,6 @@ function setCookieHour(name, value, hours){
 }
 
 const handleCart = ({ productId, thumbnail, name }) => {
-  if (!isLogin) return alert('로그인이 필요합니다.');
   if(confirm('장바구니에 담겠습니까?')){
     const localDataCartList = getCookie('cartList');
     const cartList = localDataCartList ? JSON.parse(localDataCartList) : {};
