@@ -44,7 +44,7 @@ exports.post_write = async (req, res) => {
 exports.get_edit = async (req, res) => {
   try {
     const product = await models.Products.findByPk(req.params.id);
-    res.render( 'admin/form.html' ,{ product, csrfToken: req.csrfToken() });
+    res.render( 'admin/form.html',{ product, csrfToken: req.csrfToken() });
   } catch (e){
     console.log(e);
   }
@@ -58,7 +58,7 @@ exports.post_edit = async (req, res) => {
       await fs.unlinkSync( uploadDir + '/' + product.thumbnail );
     }
     // 파일요청이면 파일명을 담고 아니면 이전 DB에서 가져온다
-    req.body.thumbnail = (req.file) ? req.file.filename : product.thumbnail;
+    req.body.thumbnail = (req.file) ? req.file.filename: product.thumbnail;
     await models.Products.update(
       req.body,
       {
@@ -104,7 +104,7 @@ exports.get_detail = async (req, res) => {
       ],
     });
     // const product = await models.Products.findByPk(req.params.id);
-    res.render( 'admin/detail.html' ,{ product });
+    res.render( 'admin/detail.html',{ product });
   } catch (e){
     console.log(e);
   }
@@ -121,24 +121,61 @@ exports.post_detail = async(req, res) => {
   }
 };
 
-exports.post_summernote = (req,res) => {
+exports.post_summernote = (req, res) => {
   res.send( '/uploads/' + req.file.filename);
 };
 
-exports.get_order = async(req,res) => {
+exports.get_order = async(req, res) => {
   try {
     const checkouts = await models.Checkout.findAll();
-    res.render( 'admin/order.html' , { checkouts });
+    res.render( 'admin/order.html', { checkouts });
   } catch (e){
     console.log(e);
   }
 };
 
-exports.get_order_edit = async(req,res) => {
+exports.get_order_edit = async(req, res) => {
   try {
     const checkout = await models.Checkout.findByPk(req.params.id);
-    res.render( 'admin/order_edit.html' , { checkout });
+    res.render( 'admin/order_edit.html', { checkout });
   } catch (e){
     console.log(e);
   }
 };
+
+exports.post_order_edit = async(req, res) => {
+  try {
+    await models.Checkout.update(
+      req.body,
+      {
+        where: { id: req.params.id }
+      }
+    );
+    res.redirect('/admin/order');
+  } catch (e){
+    console.log(e);
+  }
+}
+
+exports.statistics = async(_, res) => {
+  try {
+    const barData = await models.Checkout.findAll({
+      attributes: [
+        [models.sequelize.literal('date_format( createdAt, "%Y-%m-%d")'), 'date'],
+        [models.sequelize.fn('count', models.sequelize.col('id')), 'cnt']
+      ],
+      group: [ 'date' ]
+    });
+    const pieData = await models.Checkout.findAll({
+      attributes: [
+        'status',
+        [models.sequelize.fn('count', models.sequelize.col('id')), 'cnt']
+      ],
+      group: [ 'status' ]
+    })
+
+    res.render('admin/statistics.html', { barData, pieData });
+  } catch (e){
+    console.log(e);
+  }
+}
