@@ -1,0 +1,23 @@
+{% set title = "유저 : 상세페이지" %}
+{% extends "layout/adminBase.html" %}
+
+{% block content -%}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    유저고유번호 : {{ user.id }}
+  </div>
+  <div class="panel-heading">
+    ID : {{ user.username }}
+  </div>
+  <div class="panel-body">
+    <div style="padding-bottom: 10px">
+      닉네임 : {{ user.displayname }}
+    </div>
+    <div style="padding-bottom: 10px">
+      생성일 : {{ user.dateFormat( user.createdAt ) }}
+    </div>
+  </div>
+</div>
+
+<a href="/users" class="btn btn-default">목록으로</a>
+{% endblock %}

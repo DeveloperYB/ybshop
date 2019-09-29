@@ -1,4 +1,5 @@
 const passwordHash = require('../helpers/passwordHash');
+const moment = require('moment');
 
 module.exports = function(sequelize, DataTypes){
   const User = sequelize.define('User',
@@ -56,5 +57,6 @@ User.associate = (models) => {
     user.password = passwordHash(user.password);
   });
 
+  User.prototype.dateFormat = (date) => moment(date).format('YYYY-MM-DD h:mm:ss A');
   return User;
 }

@@ -9,5 +9,6 @@ router.use('/chat', require('./chat'));
 router.use('/products', require('./products'));
 router.use('/cart',  require('./cart'));
 router.use('/checkout',  require('./checkout'));
+router.use('/users',  require('./users'));
 
 module.exports = router;

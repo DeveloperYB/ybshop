@@ -1,0 +1,55 @@
+{% set title = "유저 리스트" %}
+{% extends "layout/adminBase.html" %}
+
+{% block content -%}
+  <table class="table table-bordered table-hover">
+    <tr>
+      <th>번호</th>
+      <th>ID</th>
+      <th>닉네임</th>
+      <th>생성일</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+      <td>
+        {{ user.id }}
+      </td>
+      <td>
+        <a href="/users/detail/{{ user.id }}">{{ user.username }}</a>
+      </td>
+      <td>
+        {{ user.displayname }}
+      </td>
+      <td>
+        {{ user.dateFormat( user.createdAt ) }}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <nav>
+      <ul class="pagination">
+      {% if paginate.hasPreviousPages %}
+          <li>
+              <a href="{{ paginate.href(true) }}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+              </a>
+          </li>
+      {% endif %}
+
+      {% for page in pages %}
+          <li class="{% if paginate.page == page.number %} active {% endif %}">
+              <a href="{{ page.url }}">{{ page.number }} </a>
+          </li>
+      {% endfor %}
+
+      {% if paginate.hasNextPages( pageCount ) %}
+          <li>
+              <a href="{{ paginate.href() }}">
+                  <span aria-hidden="true">&raquo;</span>
+              </a>
+          </li>
+      {% endif %}
+      </ul>
+  </nav>
+  <a href="/accounts/join" class="btn btn-default">신규가입</a>
+{% endblock %}
