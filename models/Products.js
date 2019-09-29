@@ -25,6 +25,17 @@ module.exports = (sequelize, DataTypes) => {
       },
     );
     Products.belongsTo(models.User, { as :'Owner',  foreignKey: 'user_id', targetKey: 'id'} );
+    // 즐겨찾기 구현
+    Products.belongsToMany(models.User,{
+      through: {
+        model: 'LikesProducts',
+        unique: false
+      },
+      as: 'LikeUser',
+      foreignKey: 'product_id',
+      sourceKey: 'id',
+      constraints: false
+    });
   };
 
   Products.prototype.dateFormat = (date) => moment(date).format('YYYY-MM-DD h:mm:ss A');
