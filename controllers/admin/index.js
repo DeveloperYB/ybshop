@@ -16,6 +16,9 @@ router.use(adminRequired);
 router.get('/products/write', csrfProtection, ctrl.get_write);
 router.post('/products/write', upload.single('thumbnail'), csrfProtection, ctrl.post_write);
 
+router.post('/tag', ctrl.write_tag);
+router.delete('/tag/:product_id/:tag_id', ctrl.delete_tag);
+
 router.get('/products/edit/:id', csrfProtection, ctrl.get_edit);
 router.post('/products/edit/:id', upload.single('thumbnail'), ctrl.post_edit);
 

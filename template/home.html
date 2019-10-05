@@ -1,9 +1,14 @@
 {% set title = "쇼핑몰 메인화면" %}
 {% extends "layout/base.html" %}
 
-{% block content -%}
+{# 좋아요 불러오기 #}
+{% from "macro/like.html" import like %}
 
-    <div class="container" id="masonry_container">
+{# 태그 불러오기 #}
+{% from "macro/tag.html" import view_tag %}
+
+{% block content -%}
+    <div class="container prd masonry_container">
         {% for product in products %}
         <div class="masonry-grid">
           <a class="product-link-wrap" href="/products/{{ product.id }}">
@@ -17,11 +22,38 @@
                 )
             </p>
           </a>
+
+          <!-- 태그 불러오기 -->
+          {{ view_tag( product.Tag ) }}
+
+          <div class="likeInfo">
+            {% if product.LikeUser and product.LikeUser.length > 0 %}
+            {{ product.LikeUser[0].displayname }}님 외, {{ product.LikeUser.length }}명이 좋아합니다.
+            {% endif %}
+          </div>
+          <span class="likeBtn" id="like_area_{{ product.id }}">
+            {{ like( isLogin , product.id , userLikes ) }}
+          </span>
         </div>
         {% endfor %}
     </div>
 
 <style type="text/css">
+.masonry-grid {
+  position: relative;
+}
+.masonry-grid .likeBtn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.masonry-grid .likeInfo {
+  font-size: 13px;
+  color: #fb4d6e;
+}
+.masonry-grid p {
+  margin: 0;
+}
 .masonry-grid img { max-width: 260px; }
 .product-link-wrap {
   display: block;
@@ -35,12 +67,12 @@
 }
 </style>
 <script type="text/javascript">
-    var $masonry_container = $('#masonry_container');
-    $masonry_container.imagesLoaded(function(){
-      $masonry_container.masonry({
-        itemSelector : '.masonry-grid',
-        columnWidth : 270
-      });
+  var $masonry_container = $('.masonry_container');
+  $masonry_container.imagesLoaded(function(){
+    $masonry_container.masonry({
+      itemSelector : '.masonry-grid',
+      columnWidth : 270
     });
+  });
 </script>
 {% endblock %}

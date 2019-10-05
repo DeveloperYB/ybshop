@@ -43,7 +43,15 @@ exports.post_write = async (req, res) => {
 
 exports.get_edit = async (req, res) => {
   try {
-    const product = await models.Products.findByPk(req.params.id);
+    const product = await models.Products.findOne({
+      where : { id : req.params.id},
+      include : [
+        { model : models.Tag, as : 'Tag' }
+      ],
+      order: [
+        [ 'Tag', 'createdAt', 'desc' ]
+      ]
+    });
     res.render( 'admin/form.html',{ product, csrfToken: req.csrfToken() });
   } catch (e){
     console.log(e);
@@ -177,5 +185,39 @@ exports.statistics = async(_, res) => {
     res.render('admin/statistics.html', { barData, pieData });
   } catch (e){
     console.log(e);
+  }
+}
+
+exports.write_tag = async (req, res) => {
+  try {
+      const tag = await models.Tag.findOrCreate({
+        where: {
+          name : req.body.name
+        }
+      });
+      const product = await models.Products.findByPk(req.body.product_id);
+      const status = await product.addTag(tag[0]);
+      res.json({
+        status : status,
+        tag : tag[0]
+      })
+
+  } catch (e) {
+      res.json(e)
+  }
+}
+
+exports.delete_tag = async (req, res) => {
+  try {
+      const product = await models.Products.findByPk(req.params.product_id);
+      const tag = await models.Tag.findByPk(req.params.tag_id);
+
+      const result = await product.removeTag(tag);
+
+      res.json({
+          result : result
+      });
+  } catch (e) {
+
   }
 }

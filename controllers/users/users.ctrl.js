@@ -18,7 +18,7 @@ exports.get_users = async (req, res) => {
   }
 };
 
-exports.get_user = async (req, res) => {
+exports.get_user_detail = async (req, res) => {
   try {
     const user = await models.User.findOne({
       where: {
@@ -27,6 +27,30 @@ exports.get_user = async (req, res) => {
     });
 
     res.render( 'users/detail.html',{ user });
+  } catch (e){
+    console.log(e);
+  }
+};
+
+exports.get_user_wishlist = async (req, res) => {
+  try {
+    const user = await models.User.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: [
+        {
+          model: models.Products,
+          as: 'Likes',
+          include: [
+            'LikeUser',
+            { model: models.Tag, as: 'Tag' },
+          ]
+        },
+      ],
+    });
+
+    res.render( 'users/wishlist.html',{ user });
   } catch (e){
     console.log(e);
   }

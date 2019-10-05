@@ -8,9 +8,8 @@ module.exports = async (req) => {
       include : ['Likes'],
       attributes: ['id'],
     });
-
     for(let key in user.dataValues.Likes){
-      userLikes.push(user.dataValues.Likes[key].id)
+      if (user.dataValues.Likes[key].id) userLikes.push(user.dataValues.Likes[key].id)
     }
   }
   return userLikes;

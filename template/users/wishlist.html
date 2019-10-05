@@ -1,0 +1,82 @@
+{% set title = "유저 : 위시리스트" %}
+{% extends "layout/adminBase.html" %}
+
+{# 태그 불러오기 #}
+{% from "macro/tag.html" import view_tag %}
+
+{% block content -%}
+<style>
+.masonry-grid .likeInfo {
+  font-size: 13px;
+  color: #fb4d6e;
+}
+.masonry-grid p {
+  margin: 0;
+}
+.masonry-grid img { max-width: 200px; }
+.product-link-wrap {
+  display: block;
+}
+.product-link-wrap:hover {
+  text-decoration: none;
+}
+.product-link-wrap p {
+  color: #000;
+  text-decoration: none;
+}
+</style>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    유저고유번호 : {{ user.id }}
+  </div>
+  <div class="panel-heading">
+    ID : {{ user.username }}
+  </div>
+  {% if user.Likes.length > 0 %}
+  <div class="panel-heading">
+    좋아요 누른 상품목록
+  </div>
+  <div class="panel-body">
+
+    <div class="container prd masonry_container">
+      {% for product in user.Likes %}
+      <div class="masonry-grid">
+        <a class="product-link-wrap" href="/products/{{ product.id }}">
+          {% if product.thumbnail %}
+            <img src="/uploads/{{ product.thumbnail }}">
+          {% endif %}
+          <p>
+              {{ product.name }}<br />
+              by {{ product.Owner.displayname }} (
+                {{ product.dateFormat( product.createdAt ) }}
+              )
+          </p>
+        </a>
+
+        <!-- 태그 불러오기 -->
+        {{ view_tag( product.Tag ) }}
+
+        <div class="likeInfo">
+          {% if product.LikeUser and product.LikeUser.length > 0 %}
+          {{ product.LikeUser[0].displayname }}님 외, {{ product.LikeUser.length }}명이 좋아합니다.
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+  {% endif %}
+</div>
+
+<a href="/users" class="btn btn-default">목록으로</a>
+<script>
+var $masonry_container = $('.masonry_container');
+$masonry_container.imagesLoaded(function(){
+  $masonry_container.masonry({
+    itemSelector : '.masonry-grid',
+    columnWidth : 210
+  });
+});
+</script>
+{% endblock %}
