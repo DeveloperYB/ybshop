@@ -14,3 +14,5 @@ SITE_DOMAIN_HTTP = "http, 나의 웹사이트 주소를 입력 ex) https://local
 
 IAMPORT_API_KEY = "https://admin.iamport.kr/settings에서 추출"
 IAMPORT_SECRET_KEY = "https://admin.iamport.kr/settings에서 추출"
+
+SENDGRID_API_KEY = "https://app.sendgrid.com/settings/api_keys에서 발급"

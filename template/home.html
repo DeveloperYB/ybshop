@@ -9,36 +9,46 @@
 
 {% block content -%}
     <div class="container prd masonry_container">
-        {% for product in products %}
-        <div class="masonry-grid">
-          <a class="product-link-wrap" href="/products/{{ product.id }}">
-            {% if product.thumbnail %}
-              <img src="/uploads/{{ product.thumbnail }}">
-            {% endif %}
-            <p>
-                {{ product.name }}<br />
-                by {{ product.Owner.displayname }} (
-                    {{ product.dateFormat( product.createdAt ) }}
-                )
-            </p>
-          </a>
+        {% if products and products.length > 0 %}
+          {% for product in products %}
+          <div class="masonry-grid">
+            <a class="product-link-wrap" href="/products/{{ product.id }}">
+              {% if product.thumbnail %}
+                <img src="/uploads/{{ product.thumbnail }}">
+              {% endif %}
+              <p>
+                  {{ product.name }}<br />
+                  by {{ product.Owner.displayname }} (
+                      {{ product.dateFormat( product.createdAt ) }}
+                  )
+              </p>
+            </a>
 
-          <!-- 태그 불러오기 -->
-          {{ view_tag( product.Tag ) }}
+            <!-- 태그 불러오기 -->
+            {{ view_tag( product.Tag ) }}
 
-          <div class="likeInfo">
-            {% if product.LikeUser and product.LikeUser.length > 0 %}
-            {{ product.LikeUser[0].displayname }}님 외, {{ product.LikeUser.length }}명이 좋아합니다.
-            {% endif %}
+            <div class="likeInfo">
+              {% if product.LikeUser and product.LikeUser.length > 0 %}
+              {{ product.LikeUser[0].displayname }}님 외, {{ product.LikeUser.length }}명이 좋아합니다.
+              {% endif %}
+            </div>
+            <span class="likeBtn" id="like_area_{{ product.id }}">
+              {{ like( isLogin , product.id , userLikes ) }}
+            </span>
           </div>
-          <span class="likeBtn" id="like_area_{{ product.id }}">
-            {{ like( isLogin , product.id , userLikes ) }}
-          </span>
-        </div>
-        {% endfor %}
+          {% endfor %}
+        {% else %}
+          <div class="emptyPrd">준비된 상품이 없습니다.</div>
+        {% endif %}
     </div>
 
 <style type="text/css">
+.emptyPrd {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  padding: 50px 0;
+}
 .masonry-grid {
   position: relative;
 }

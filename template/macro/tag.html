@@ -4,7 +4,9 @@
 {% macro view_tag( tags ) %}
   {% for tag in tags %}
     <div class="icon_tag">
-      # {{ tag.name }}
+      <a href="/?name={{ tag.name }}">
+        # {{ tag.name }}
+      </a>
     </div>
   {% endfor %}
 {% endmacro %}
