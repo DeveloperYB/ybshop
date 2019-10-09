@@ -4,6 +4,9 @@
 {# 좋아요 불러오기 #}
 {% from "macro/like.html" import like %}
 
+{# 태그 불러오기 #}
+{% from "macro/tag.html" import view_tag %}
+
 {% block content -%}
 <script>
   const userId = {% if user %}{{ user.id }}{% else %}'nomember'{% endif %};
@@ -26,6 +29,10 @@
   <div class="panel-body">
     <div style="padding-bottom: 10px">
       작성일 : {{ product.dateFormat( product.createdAt ) }}
+    </div>
+    <div>
+      <!-- 태그 불러오기 -->
+      {{ view_tag( product.Tag ) }}
     </div>
     {% if product.thumbnail %}
     <p>

@@ -3,6 +3,8 @@
 #}
 {% macro view_tag( tags ) %}
   {% for tag in tags %}
+    <div class="icon_tag">
       # {{ tag.name }}
+    </div>
   {% endfor %}
 {% endmacro %}
