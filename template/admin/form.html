@@ -136,13 +136,13 @@ $('#tag_submit').click(function(e){
   e.preventDefault();
   var $product_id = "{{ product.id }}";
   var $tag_input = $('#tag_input');
-  if(!$tag_input.val()){
+  if (!$tag_input.val()){
       alert('태그명을 입력하세요');
       $tag_input.focus();
       return false;
   }
 
-  if($tag_input.val().length < 2 ){
+  if ($tag_input.val().length < 2 ){
       alert('두글자 이상 입력하세요.');
       $tag_input.focus();
       return false;
@@ -157,7 +157,7 @@ $('#tag_submit').click(function(e){
       }
   })
   .done(function(result){
-      if(result.status.length){
+      if (result.status.length){
         var tag = result.tag;
         $('#tag_area').append('\
             <div class="icon_tag">' +
@@ -170,7 +170,7 @@ $('#tag_submit').click(function(e){
         ');
         // 추가후 검색 초기화
         $('#tag_input').val('');
-      }else{
+      }else {
           alert('이미 있는 등록된 태그입니다.');
       }
 
@@ -183,7 +183,7 @@ $('#tag_submit').click(function(e){
 
 $(document).on('click','.delete_tag', function(e){
   e.preventDefault();
-  if(!confirm('삭제하시겠습니까?')){
+  if (!confirm('삭제하시겠습니까?')){
       return false;
   }
 
@@ -195,7 +195,7 @@ $(document).on('click','.delete_tag', function(e){
       type : 'delete'
   }).
   done(function(result){
-      if(result){
+      if (result){
           $self.parent().remove();
       }
   })

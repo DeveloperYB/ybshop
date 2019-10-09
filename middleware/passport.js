@@ -34,6 +34,7 @@ passport.use(
     if (!isExistedUsername) {
       return done(null, false, { message: '일치하는 아이디가 존재하지 않습니다.' });
     }
+
     // 조회
     const user = await models.User.findOne({
       where: {
@@ -43,9 +44,12 @@ passport.use(
       attributes: { exclude: ['password'] }
     });
     // 유저에서 조회되지 않을시
-    if (!user){
+    if (!user) {
       return done(null, false, { message: '패스워드가 일치하지 않습니다.' });
-    // 유저에서 조회 되면 세션등록쪽으로 데이터를 넘김
+      // 유저에서 조회 되면 세션등록쪽으로 데이터를 넘김
+    } else if (user.status == "이메일미인증") {
+      return done(null, false, { message: '이메일 인증을 진행해주세요.' });
+      // 유저에서 조회 되면 세션등록쪽으로 데이터를 넘김
     } else {
       return done(null, user.dataValues );
     }

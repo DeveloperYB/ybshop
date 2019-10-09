@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       constraints: false
     });
 
-    Products.belongsToMany( models.Tag ,{
+    Products.belongsToMany( models.Tag,{
       through: {
         model: 'TagProduct',
         unique: false

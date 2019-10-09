@@ -23,7 +23,7 @@ function setCookieHour(name, value, hours){
 }
 
 const handleCart = ({ productId, thumbnail, name }) => {
-  if(confirm('장바구니에 담겠습니까?')){
+  if (confirm('장바구니에 담겠습니까?')){
     const localDataCartList = getCookie('cartList');
     const cartList = localDataCartList ? JSON.parse(localDataCartList) : {};
     // //갯수와 총량을 담는다.
@@ -44,13 +44,13 @@ const handleCart = ({ productId, thumbnail, name }) => {
     };
     cartListByUserId[productId] = cartItemByPrdId;
 
-    setCookieHour( "cartList" , JSON.stringify({ ...cartList, [userId]: cartListByUserId }), (10 * 365 * 24) );
+    setCookieHour( "cartList", JSON.stringify({ ...cartList, [userId]: cartListByUserId }), (10 * 365 * 24) );
 
     alert("장바구니에 담았습니다.");
   }
 };
 
-$(document).on( 'click' , '.add_like' , function(e){
+$(document).on( 'click', '.add_like', function(e){
   // 주소에 # 붙는것 방지
   e.preventDefault();
   // 부모 요소의 아이디를 가져온다.
@@ -73,7 +73,7 @@ $(document).on( 'click' , '.add_like' , function(e){
   });
 });
 
-$(document).on( 'click' , '.remove_like' , function(e){
+$(document).on( 'click', '.remove_like', function(e){
   // 주소에 # 붙는것 방지
   e.preventDefault();
   // 부모 요소의 아이디를 가져온다.

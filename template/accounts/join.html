@@ -15,7 +15,7 @@
         <form role="form" id="join_form" method="post">
           <fieldset>
             <div class="form-group">
-              <input class="form-control" placeholder="ID" name="username" type="text" autofocus="" required>
+              <input class="form-control" placeholder="ID, email을 기재해주세요." name="username" type="email" autofocus="" required>
             </div>
             <div class="form-group">
               <input class="form-control" placeholder="Password" name="password" type="password" value="" required>
@@ -60,15 +60,15 @@ $(document).ready(function() {
     var $idInput = $('#join_form input[name=username]');
     var $passwordInput = $('#join_form input[name=password]');
     var $passwordInput2 = $('#join_form input[name=password2]');
-    if(/\s/.test($idInput.val())) {
+    if (/\s/.test($idInput.val())) {
       alert("ID에 공백값을 지워주세요");
       return false;
     }
-    if($passwordInput.val().length < 4){
+    if ($passwordInput.val().length < 4){
       alert("4글자 이상 작성해주세요");
       return false;
     }
-    if($passwordInput.val() !== $passwordInput2.val()){
+    if ($passwordInput.val() !== $passwordInput2.val()){
       alert("패스워드와 확인용패스워드를 똑같이 입력해주세요.");
       return false;
     }

@@ -23,7 +23,7 @@
     {{ product.name }}
 
     <span id="like_area_{{ product.id }}">
-      {{ like( isLogin , product.id , userLikes ) }}
+      {{ like( isLogin, product.id, userLikes ) }}
     </span>
   </div>
   <div class="panel-body">
@@ -82,7 +82,7 @@ $('.CountBox a').click(function(event){
   } else if (type === 'plus'){
     cartNum += 1;
   }
-  //input 태그에 반영 , html페이지 에도 반영
+  //input 태그에 반영, html페이지 에도 반영
   $('input[name=number]').val(cartNum);
   $('#amountHtml').html(cartNum);
   $('input[name=amount]').val(cartNum * price);

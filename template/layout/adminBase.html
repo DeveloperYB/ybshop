@@ -44,8 +44,8 @@
               {% from 'macro/link.html' import link %}
               {{ link( '/', 'HOME', req_path ) }}
               {% if req_user.username == 'admin' %}
-                {{ link( '/admin/products' , "ADMIN" , req_path ) }}
-                {{ link( '/admin/statistics' , "CHART" , req_path ) }}
+                {{ link( '/admin/products', "ADMIN", req_path ) }}
+                {{ link( '/admin/statistics', "CHART", req_path ) }}
               {% endif %}
               {{ link( '/chat', 'CHAT', req_path ) }}
               {{ link( '/cart', 'CART', req_path ) }}

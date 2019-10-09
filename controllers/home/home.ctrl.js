@@ -7,7 +7,7 @@ exports.index = async (req, res) => {
       {
         model: models.User,
         as: 'Owner',
-        attributes: [ 'username' , 'displayname' ],
+        attributes: [ 'username', 'displayname' ],
       },
       { model: models.Tag, as: 'Tag' },
     ],
@@ -19,7 +19,7 @@ exports.index = async (req, res) => {
           {
             // + 태그에서 가져옴 or
             [models.Sequelize.Op.or]: [
-              models.Sequelize.where( models.Sequelize.col('Tag.name') , {
+              models.Sequelize.where( models.Sequelize.col('Tag.name'), {
                 [models.Sequelize.Op.like]: `%${req.query.name}%`
               }),
               {
@@ -40,5 +40,5 @@ exports.index = async (req, res) => {
   // 좋아요 내용을 가져온다
   const userLikes = await require('../../helpers/userLikes')(req);
   // console.log(models.Products.findAll())
-  res.render( 'home.html' , { products, userLikes });
+  res.render( 'home.html', { products, userLikes });
 };

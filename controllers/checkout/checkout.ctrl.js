@@ -116,7 +116,7 @@ exports.get_shipping = async (req, res) => {
         result.push(temp); //한줄을 다 넣으면 result의 한줄을 푸시한다
       }
     }
-    res.render('checkout/shipping.html' , { result });
+    res.render('checkout/shipping.html', { result });
   } catch(e) {
     console.error(e);
     res.send('error');

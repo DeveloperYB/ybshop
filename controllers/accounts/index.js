@@ -15,4 +15,8 @@ router.post('/login', passport.authenticate('local', {
 
 router.get('/logout', ctrl.get_logout);
 
+// 이메일 인증관련
+router.get('/join/check', ctrl.join_check);
+router.get('/join/validate', ctrl.join_validate);
+
 module.exports = router;
