@@ -60,7 +60,7 @@ passport.use(new FacebookStrategy({
     // https://developers.facebook.com에서 appId 및 scretID 발급
     clientID: process.env.FACEBOOK_APPID, //입력하세요
     clientSecret: process.env.FACEBOOK_SECRETCODE, //입력하세요.
-    callbackURL: `${process.env.SITE_DOMAIN_HTTPS}/auth/facebook/callback`,
+    callbackURL: `${process.env.SITE_DOMAIN}/auth/facebook/callback`,
     profileFields: ['id', 'displayName', 'photos', 'email'] //받고 싶은 필드 나열
   },
   async (accessToken, refreshToken, profile, done) => {
@@ -104,7 +104,7 @@ passport.use(new FacebookStrategy({
 passport.use(new NaverStrategy({
     clientID: process.env.NAVER_APPID,
     clientSecret: process.env.NAVER_SECRETCODE,
-    callbackURL: `${process.env.SITE_DOMAIN_HTTP}/auth/naver/callback`,
+    callbackURL: `${process.env.SITE_DOMAIN}/auth/naver/callback`,
   },
   async (accessToken, refreshToken, profile, done) => {
     //아래 하나씩 찍어보면서 데이터를 참고해주세요.

@@ -38,7 +38,7 @@ exports.post_join = async(req, res) => {
 
     // 인증 메일 발송
     const template = require('../../helpers/email/joinTemplate');
-    const sigin_up_url = `${process.env.SITE_DOMAIN_HTTP}/accounts/join/validate?hash_key=${hash_key}`;
+    const sigin_up_url = `${process.env.SITE_DOMAIN}/accounts/join/validate?hash_key=${hash_key}`;
 
     await require('../../helpers/email/sendMail')({
       to : user.username,

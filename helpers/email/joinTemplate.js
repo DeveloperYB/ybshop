@@ -11,7 +11,7 @@ module.exports = ( sign_url ) =>(`
       <div style="padding:20px; border:1px solid #eee; background-color:#fff; width:70%; margin:20px auto 0; word-break:break-all; white-space:breal-all;">
         <a style="color:#777;" href="${sign_url}">${sign_url}</a>
       </div>
-      <p style="margin-top:20px;"><a style="padding:10px 30px; margin:0 auto; text-align:center; background-color:#333; color:#fff; border-radius:10px; font-size:9pt;" href="${process.env.SITE_DOMAIN_HTTP}">YB SHOP 바로가기</a></p>
+      <p style="margin-top:20px;"><a style="padding:10px 30px; margin:0 auto; text-align:center; background-color:#333; color:#fff; border-radius:10px; font-size:9pt;" href="${process.env.SITE_DOMAIN}">YB SHOP 바로가기</a></p>
       <p style="margin:0; padding:0; color:#999; margin-top:20px;">Copyright &copy; YB SHOP All Rights Reserved </p>
     </div>
   </div>
