@@ -38,13 +38,13 @@ class App {
     db.sequelize.authenticate()
     .then(() => {
       console.log('Connection has been established successfully.');
-      return db.sequelize.sync();
+      // return db.sequelize.sync();
       // return db.sequelize.drop();
     })
     .then(() => {
       console.log('DB Sync complete.');
       // 더미 데이터가 필요하면 아래 설정
-      require('./config/insertDummyData')();
+      // require('./config/insertDummyData')();
     })
     .catch(err => {
       console.error('Unable to connect to the database:', err);
