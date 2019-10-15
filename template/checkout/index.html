@@ -1,4 +1,4 @@
-{% set title = "쇼핑몰 : 결제페이지 " %}
+{% set title = "쇼핑몰: 결제페이지 " %}
 {% extends "layout/base.html" %}
 
 {% block content -%}
@@ -27,7 +27,7 @@
 </table>
 
 <div class="text-center" style="font-size:30px; margin-bottom:20px;">
-  결제금액 : <span style="color:red"> {{ totalAmount }} </span> 원
+  결제금액: <span style="color:red"> {{ totalAmount }} </span> 원
 </div>
 
 <form id="orderForm">
@@ -63,7 +63,7 @@
       </tr>
     </tbody>
   </table>
-  <div class="text-center" style="margin : 30px 0 100px 0">
+  <div class="text-center" style="margin: 30px 0 100px 0">
     <button class="btn btn-primary">구매하기</button>
   </div>
 </form>
@@ -134,10 +134,10 @@ function setDaumPostcode() {
         }
         // 건물명이 있을 경우 추가한다.
         if (data.buildingName !== ''){
-          extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+          extraAddr += (extraAddr !== '' ? ', ' + data.buildingName: data.buildingName);
         }
         // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
-        fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+        fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')': '');
       }
 
       // 우편번호와 주소 정보를 해당 필드에 넣는다.

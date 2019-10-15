@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes){
         },
         allowNull: false,
       },
-      status : { type: DataTypes.STRING },
+      status: { type: DataTypes.STRING },
       displayname: { type: DataTypes.STRING },
     },{
       tableName: 'User',

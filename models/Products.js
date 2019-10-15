@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE'
       },
     );
-    Products.belongsTo(models.User, { as :'Owner',  foreignKey: 'user_id', targetKey: 'id'} );
+    Products.belongsTo(models.User, { as:'Owner',  foreignKey: 'user_id', targetKey: 'id'} );
     // 즐겨찾기 구현
     Products.belongsToMany(models.User,{
       through: {
@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'TagProduct',
         unique: false
       },
-      as : 'Tag',
+      as: 'Tag',
       foreignKey: 'product_id',
       sourceKey: 'id',
       constraints: false

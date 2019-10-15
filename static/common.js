@@ -25,7 +25,7 @@ function setCookieHour(name, value, hours){
 const handleCart = ({ productId, thumbnail, name }) => {
   if (confirm('장바구니에 담겠습니까?')){
     const localDataCartList = getCookie('cartList');
-    const cartList = localDataCartList ? JSON.parse(localDataCartList) : {};
+    const cartList = localDataCartList ? JSON.parse(localDataCartList): {};
     // //갯수와 총량을 담는다.
     var count = Number($('input[name=number]').val());
     var amount = Number($('input[name=amount]').val());
@@ -35,7 +35,7 @@ const handleCart = ({ productId, thumbnail, name }) => {
       ...cartListByUserId[productId],
       count: cartListByUserId[productId].count + count,
       amount: cartListByUserId[productId].amount + amount,
-    } : {
+    }: {
       thumbnail,
       name,
       id: productId,
@@ -58,8 +58,8 @@ $(document).on( 'click', '.add_like', function(e){
   // 현재 제품의 id 받아옴
   var product_id = $(this).attr('product_id');
   $.ajax({
-    url : '/products/like/'+ product_id,
-    type : 'post',
+    url: '/products/like/'+ product_id,
+    type: 'post',
   })
   .done(function(){
     $('#' + target_id).html('\
@@ -81,8 +81,8 @@ $(document).on( 'click', '.remove_like', function(e){
   // 현재 제품의 id 받아옴
   var product_id = $(this).attr('product_id');
   $.ajax({
-    url : '/products/like/'+ product_id,
-    type : 'delete',
+    url: '/products/like/'+ product_id,
+    type: 'delete',
   })
   .done(function(){
     $('#' + target_id).html('\

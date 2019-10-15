@@ -26,6 +26,10 @@
             <div class="form-group">
               <input class="form-control" placeholder="이름" name="displayname" type="text" value="" required>
             </div>
+            {{ captcha | safe }}
+            <div class="alert alert-warning" id="recapcha_message" style="margin-top:10px;display: none;" role="alert">
+              로봇이 아닙니다를 체크 완료해주세요.
+            </div>
             <!-- Change this to a button or input when using this as a form -->
             <input type="submit" class="btn btn-lg btn-success btn-block" value="가입하기">
             <div style="margin-top: 10px">
@@ -60,6 +64,8 @@ $(document).ready(function() {
     var $idInput = $('#join_form input[name=username]');
     var $passwordInput = $('#join_form input[name=password]');
     var $passwordInput2 = $('#join_form input[name=password2]');
+    var $recapcha_resonse = $('#g-recaptcha-response');
+
     if (/\s/.test($idInput.val())) {
       alert("ID에 공백값을 지워주세요");
       return false;
@@ -70,6 +76,10 @@ $(document).ready(function() {
     }
     if ($passwordInput.val() !== $passwordInput2.val()){
       alert("패스워드와 확인용패스워드를 똑같이 입력해주세요.");
+      return false;
+    }
+    if(!$recapcha_resonse.val()){
+      $('#recapcha_message').show();
       return false;
     }
     return true;

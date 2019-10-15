@@ -15,3 +15,6 @@ IAMPORT_API_KEY = "https://admin.iamport.kr/settings에서 추출"
 IAMPORT_SECRET_KEY = "https://admin.iamport.kr/settings에서 추출"
 
 SENDGRID_API_KEY = "https://app.sendgrid.com/settings/api_keys에서 발급"
+
+RECAPCHA_SITE_KEY = "https://www.google.com/recaptcha/admin/ 추출"
+RECAPCHA_SECRET_KEY = "https://www.google.com/recaptcha/admin/ 추출"

@@ -1,4 +1,4 @@
-{% set title = "유저 : 위시리스트" %}
+{% set title = "유저: 위시리스트" %}
 {% extends "layout/adminBase.html" %}
 
 {# 태그 불러오기 #}
@@ -27,10 +27,10 @@
 </style>
 <div class="panel panel-default">
   <div class="panel-heading">
-    유저고유번호 : {{ user.id }}
+    유저고유번호: {{ user.id }}
   </div>
   <div class="panel-heading">
-    ID : {{ user.username }}
+    ID: {{ user.username }}
   </div>
   {% if user.Likes.length > 0 %}
   <div class="panel-heading">
@@ -74,8 +74,8 @@
 var $masonry_container = $('.masonry_container');
 $masonry_container.imagesLoaded(function(){
   $masonry_container.masonry({
-    itemSelector : '.masonry-grid',
-    columnWidth : 210
+    itemSelector: '.masonry-grid',
+    columnWidth: 210
   });
 });
 </script>

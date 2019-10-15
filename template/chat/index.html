@@ -41,7 +41,7 @@
 .panel-default ul { padding-left:0px; }
 .panel-default ul li { list-style:none; padding-left:0px;}
 .panel-default .panel-body {min-height:350px; max-height:350px;  overflow-y:scroll; }
-#chatWrap ul li strong::after { content: " : "; }
+#chatWrap ul li strong::after { content: ": "; }
 @media (max-width: 768px) {
   #userWrap { display:none; }
   #chatWrap .panel-body { min-height:250px; }
@@ -73,7 +73,7 @@ socket.on('server message', function(data){
 $(document).ready(function() {
   $('#sendForm').submit(function(){
     var message = $('#sendForm input[name=message]');
-    socket.emit('client message', { message : message.val()});
+    socket.emit('client message', { message: message.val()});
     message.val('');
     return false;
   });

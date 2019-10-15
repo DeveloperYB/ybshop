@@ -1,4 +1,4 @@
-{% set title = "쇼핑몰 : 제품페이지" %}
+{% set title = "쇼핑몰: 제품페이지" %}
 {% extends "layout/base.html" %}
 
 {# 좋아요 불러오기 #}
@@ -28,7 +28,7 @@
   </div>
   <div class="panel-body">
     <div style="padding-bottom: 10px">
-      작성일 : {{ product.dateFormat( product.createdAt ) }}
+      작성일: {{ product.dateFormat( product.createdAt ) }}
     </div>
     <div>
       <!-- 태그 불러오기 -->
@@ -50,14 +50,14 @@
       <!--선택한 갯수 * 가격 = 구매가격 -->
       <input type="hidden" name="amount" value="{{ product.price }}">
       <div>
-        <div class="printNum">갯수 : </div>
+        <div class="printNum">갯수: </div>
         <div class="CountBox">
           <a href="#" type="minus">-</a>
           <p id="amountHtml">1</p>
           <a href="#" type="plus">+</a>
         </div>
         <div class="priceWrap">
-          금액 : <span id="priceHtml">{{ product.price }}</span>
+          금액: <span id="priceHtml">{{ product.price }}</span>
         </div>
         <div style="clear:both"></div>
       </div>
@@ -100,15 +100,15 @@ $('.CountBox a').click(function(event){
     float:left;
 }
 .CountBox a {
-    border : 1px solid #ddd;
+    border: 1px solid #ddd;
     display:block;
     float:left;
     padding: 4px 8px;
     text-decoration: none;
 }
 .CountBox p {
-    border-top : 1px solid #ddd;
-    border-bottom : 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
     display:block;
     float:left;
     padding: 4px 8px;
@@ -120,7 +120,7 @@ $('.CountBox a').click(function(event){
 }
 
 .priceWrap span::after {
-    content : " 원";
+    content: " 원";
 }
 </style>
 {% endblock %}

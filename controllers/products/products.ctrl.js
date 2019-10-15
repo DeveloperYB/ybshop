@@ -4,9 +4,9 @@ exports.index = async(req, res) => {
   try {
     const user = req.user;
     const product = await models.Products.findOne({
-      where : { id : req.params.id},
-      include : [
-        { model : models.Tag, as : 'Tag' }
+      where: { id: req.params.id},
+      include: [
+        { model: models.Tag, as: 'Tag' }
       ],
       order: [
         [ 'Tag', 'createdAt', 'desc' ]
@@ -38,7 +38,7 @@ exports.delete_likes = async (req, res) => {
     const user = await models.User.findByPk(req.user.id);
     await user.removeLikes(product);
     res.json({
-      message : "success"
+      message: "success"
     });
   } catch (e) {
     console.log(e);

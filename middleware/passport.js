@@ -20,8 +20,8 @@ passport.deserializeUser((user, done) => {
 passport.use(
   new LocalStrategy({
     usernameField: 'username',
-    passwordField : 'password',
-    passReqToCallback : true
+    passwordField: 'password',
+    passReqToCallback: true
   },
   async (req, username, password, done) => {
     // 아이디 조회
@@ -39,7 +39,7 @@ passport.use(
     const user = await models.User.findOne({
       where: {
         username,
-        password : passwordHash(password),
+        password: passwordHash(password),
       },
       attributes: { exclude: ['password'] }
     });

@@ -1,4 +1,4 @@
-{% set title = "쇼핑몰 : 장바구니" %}
+{% set title = "쇼핑몰: 장바구니" %}
 {% extends "layout/base.html" %}
 
 {% block content -%}
@@ -34,7 +34,7 @@
 </table>
 
 <div class="text-center" style="font-size:30px; margin-bottom:20px;">
-  결제금액 : <span style="color:red"> {{ totalAmount }} </span> 원
+  결제금액: <span style="color:red"> {{ totalAmount }} </span> 원
 </div>
 <div class="text-center">
   <a href="/" class="btn btn-default" style="margin-right:10px;">계속쇼핑하기</a>
@@ -45,7 +45,7 @@ $('.deleteCart').click(function(event){
   event.preventDefault(); //href의 링크로 넘어가게 하지 않는다.
   if (confirm('삭제하시겠습니까?')){
     const localDataCartList = getCookie('cartList');
-    const cartList = localDataCartList ? JSON.parse(localDataCartList) : {};
+    const cartList = localDataCartList ? JSON.parse(localDataCartList): {};
     let cartListByUserId = {};
     if (userId && cartList[userId]) cartListByUserId = {...cartList[userId]};
 

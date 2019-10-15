@@ -4,12 +4,12 @@ module.exports = (sequelize, DataTypes) => {
   const Tag = sequelize.define('Tag',
     {
       id: { type: DataTypes.BIGINT.UNSIGNED, primaryKey: true, autoIncrement: true },
-      name : {
+      name: {
         type: DataTypes.STRING(200),
-        validate : {
-          len : [0, 50]
+        validate: {
+          len: [0, 50]
         },
-        allowNull : false
+        allowNull: false
       }
     },
     {
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'TagProduct',
         unique: false
       },
-      as : 'Product',
+      as: 'Product',
       foreignKey: 'tag_id',
       sourceKey: 'id',
       constraints: false

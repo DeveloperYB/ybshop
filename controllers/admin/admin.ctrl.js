@@ -44,9 +44,9 @@ exports.post_write = async (req, res) => {
 exports.get_edit = async (req, res) => {
   try {
     const product = await models.Products.findOne({
-      where : { id : req.params.id},
-      include : [
-        { model : models.Tag, as : 'Tag' }
+      where: { id: req.params.id},
+      include: [
+        { model: models.Tag, as: 'Tag' }
       ],
       order: [
         [ 'Tag', 'createdAt', 'desc' ]
@@ -192,14 +192,14 @@ exports.write_tag = async (req, res) => {
   try {
       const tag = await models.Tag.findOrCreate({
         where: {
-          name : req.body.name
+          name: req.body.name
         }
       });
       const product = await models.Products.findByPk(req.body.product_id);
       const status = await product.addTag(tag[0]);
       res.json({
-        status : status,
-        tag : tag[0]
+        status: status,
+        tag: tag[0]
       })
 
   } catch (e) {
@@ -215,7 +215,7 @@ exports.delete_tag = async (req, res) => {
       const result = await product.removeTag(tag);
 
       res.json({
-          result : result
+          result: result
       });
   } catch (e) {
 
