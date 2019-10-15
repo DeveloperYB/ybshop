@@ -17,7 +17,7 @@
   {% for key, cart in cartList %}
     <tr>
       <td>
-        <img src="/uploads/{{ cart.thumbnail }}" alt="" width="50" height="50" />
+        <img src="{{ cart.thumbnail }}" alt="" width="50" height="50" />
       </td>
       <td>{{ cart.name }}</td>
       <td>{{ cart.count }}</td>

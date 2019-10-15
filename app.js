@@ -31,6 +31,8 @@ class App {
     this.setLocals();
     // 라우팅
     this.getRouting();
+    // 404 페이지를 찾을수가 없음
+    this.status404();
   }
 
   dbConnection(){
@@ -105,6 +107,12 @@ class App {
 
   getRouting (){
     this.app.use(require('./controllers'));
+  }
+
+  status404() {
+    this.app.use((_, res) => {
+      res.status(404).render('common/404.html');
+    });
   }
 }
 

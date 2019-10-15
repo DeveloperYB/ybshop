@@ -6,7 +6,12 @@
 {% extends "layout/adminBase.html" %}
 
 {% block content -%}
-<form method="post" enctype="multipart/form-data" id="editForm">
+
+{% if '/admin/products/edit' in req_path %}
+<form action="/admin/upload/products/{{ product.id }}" method="post" enctype="multipart/form-data" id="editForm">
+{% else %}
+<form action="" method="post" enctype="multipart/form-data" id="editForm">
+{% endif %}
   <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
   <table class="table table-bordered">
     <tr>
@@ -22,11 +27,11 @@
             style="width: 100px; height: 100px;"
             id="prevImg"
             alt="Preview image"
-            src="{% if product.thumbnail %}/uploads/{{ product.thumbnail }}{% else %}#{% endif %}"
+            src="{% if product.thumbnail %}{{ product.thumbnail }}{% else %}#{% endif %}"
           />
         </div>
         {% if product.thumbnail %}
-            <a href="/uploads/{{ product.thumbnail }}" target="_blank">업로드 이미지 보기</a>
+            <a href="{{ product.thumbnail }}" target="_blank">업로드 이미지 보기</a>
         {% endif %}
       </td>
     </tr>

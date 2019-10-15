@@ -6,6 +6,7 @@ const paginate = require('express-paginate');
 const csrfProtection = require('../../middleware/csrf');
 const adminRequired = require('../../middleware/adminRequired');
 const upload = require('../../middleware/multer');
+const upload_s3 = require('../../middleware/multer-s3');
 
 
 router.get('/products', paginate.middleware(3, 50), ctrl.get_products);
@@ -15,9 +16,6 @@ router.post('/products/detail/:id', ctrl.post_detail);
 router.use(adminRequired);
 router.get('/products/write', csrfProtection, ctrl.get_write);
 router.post('/products/write', upload.single('thumbnail'), csrfProtection, ctrl.post_write);
-
-router.post('/tag', ctrl.write_tag);
-router.delete('/tag/:product_id/:tag_id', ctrl.delete_tag);
 
 router.get('/products/edit/:id', csrfProtection, ctrl.get_edit);
 router.post('/products/edit/:id', upload.single('thumbnail'), ctrl.post_edit);
@@ -32,5 +30,10 @@ router.get('/order/edit/:id', ctrl.get_order_edit);
 router.post('/order/edit/:id', ctrl.post_order_edit);
 
 router.get('/statistics', ctrl.statistics);
+
+router.post('/tag', ctrl.write_tag);
+router.delete('/tag/:product_id/:tag_id', ctrl.delete_tag);
+
+router.post('/upload/:group/:id', upload_s3.single('thumbnail'), csrfProtection, ctrl.s3_upload );
 
 module.exports = router;
