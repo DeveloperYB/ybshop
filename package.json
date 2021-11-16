@@ -18,7 +18,7 @@
   "homepage": "https://github.com/DeveloperYB/ybshop#readme",
   "dependencies": {
     "@sendgrid/mail": "^6.4.0",
-    "aws-sdk": "^2.549.0",
+    "aws-sdk": "^2.814.0",
     "cheerio": "^1.0.0-rc.3",
     "connect-flash": "^0.1.1",
     "connect-session-sequelize": "^6.0.0",
